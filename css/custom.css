@@ -1,0 +1,136 @@
+#home{
+	padding: 20px;
+}
+body {
+	padding-top: 0 !important;
+}
+#header{
+	background: white;
+	padding-bottom: 15px;
+	padding-top: 15px;
+}
+#heading{
+	color:white;
+	background-color: #337ab7;
+	width:100%; 
+	padding-left: 15px;
+}
+#heading h4{
+	float:left;
+}
+#heading i{
+	font-size: 20px; 
+	margin-left: 20px;
+	padding-top: 9px;
+}
+
+nav ul{
+padding: 0;/*new*/
+	list-style-type: none;
+}
+.navbar{
+	padding: 0;/*new*/
+	min-height: 45px;
+	margin-bottom: 0px!important;
+}
+.navbar-collapse{
+	padding-left: 0;
+}
+
+nav ul>li>a{
+	color:white;
+}
+nav a>h4{
+	color:white;
+}
+.container-fluid{
+	padding:0;
+	
+}
+#login{
+	background-color: rgba(241,241,241,1);
+	/*background-color:#cce0eb;*/
+	padding-top:10%;
+	height:86vh;
+}
+#login #panel{
+	background-color:white;
+	max-width:400px;
+	padding-bottom:10px;
+	border:1px solid rgba(247,247,249,1);
+}
+#login h3{
+	height:45px;
+	width:100%;
+	padding:8px;
+    background: #f8f8f8;
+    border: 1px solid #e4e4e4;
+	margin:0;
+}
+#loginform{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#loginform button{
+width:100%;	
+}
+#login a{
+	color:#337ab7;
+}
+
+#solicitation{
+	background-color: rgba(241,241,241,1);
+	padding: 10px;
+}
+#solicitation-header{
+background-color: white;
+margin-bottom: 10px; 
+padding: 10px;
+}
+#solicitation-header h2{
+	margin:0px;
+	float: left;
+
+}
+#solicitation-content{
+	background-color: white; 
+padding:10px;
+}
+
+.req{
+	color:red;
+}
+
+#create-solicitation{
+background-color: white;
+margin-bottom: 10px; 
+padding: 10px;
+font-weight: bold;
+}
+#create-solicitation input, #create-solicitation select{
+	width:80%;
+	margin-top: 3px;
+	margin-left: 10px:
+	margin-right: 10px: 
+}
+
+#pageselector{
+	width: 80px;
+	float: left;
+	margin-bottom: 15px;
+	margin-right: 10px;
+}
+#current, #byme{
+	padding-top:15px;
+}
+#currentstable th{
+height:55px;
+background: none;
+}
+#currentstable span{
+	color:#a8a8a8;
+	float: right;
+}
+.btn{
+	border-radius:0;
+}
