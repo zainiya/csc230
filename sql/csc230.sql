@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2018 at 12:01 AM
+-- Generation Time: Apr 22, 2018 at 05:52 PM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -66,6 +66,26 @@ INSERT INTO `adminlogs` (`pid`, `lastlogin`, `incorrectcnt`, `lastincorrect`) VA
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bid_transaction`
+--
+
+CREATE TABLE IF NOT EXISTS `bid_transaction` (
+  `bid` int(11) NOT NULL AUTO_INCREMENT,
+  `sid` varchar(9) NOT NULL,
+  `pid` int(11) NOT NULL,
+  `application_date` date NOT NULL,
+  `last_updated` date NOT NULL,
+  `eval_status` varchar(30) DEFAULT NULL,
+  `fee` int(11) NOT NULL,
+  `score` int(11) DEFAULT NULL,
+  `bidder_status` varchar(50) DEFAULT NULL,
+  `modifiedby` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`bid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `document`
 --
 
@@ -78,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `document` (
   `due_date` date NOT NULL,
   `file` text,
   PRIMARY KEY (`dno`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `document`
@@ -92,7 +112,8 @@ INSERT INTO `document` (`dno`, `sid`, `file_name`, `dtitle`, `posted_date`, `due
 (8, '1234', 'csc230.sql', 'csc230.sql-1234', '2018-04-26', '2018-04-26', 'uploads/csc230.sql'),
 (9, '1234', 'csc230.sql', 'uploads/csc230-1234.sql', '2018-04-26', '2018-04-26', 'uploads/csc230.sql'),
 (12, '1234', 'csc230.sql', 'csc230.sql-1234', '0000-00-00', '0000-00-00', 'uploads/csc230-1234.sql'),
-(14, '167', 'csc230.sql', 'csc230.sql-167', '2018-04-27', '2018-04-27', 'uploads/csc230-167.sql');
+(14, '167', 'csc230.sql', 'csc230.sql-167', '2018-04-27', '2018-04-27', 'uploads/csc230-167.sql'),
+(15, '12345', 'csc230.sql', 'csc230.sql-12345', '2018-04-27', '2018-04-27', 'uploads/csc230-12345.sql');
 
 -- --------------------------------------------------------
 
@@ -150,9 +171,9 @@ CREATE TABLE IF NOT EXISTS `solicitation` (
 INSERT INTO `solicitation` (`pid`, `sid`, `stitle`, `type`, `category`, `status`, `last_updated`, `final_filing_date`, `description`, `cancelflag`) VALUES
 (1, '1234', 'xyz', 'solicitation', 'pscc', 'Published', '2018-04-20 22:30:29', '2018-03-31 15:00:00', 'computer software engineering', 0),
 (1, '12345', 'gfdgfdfgh', 'solicitation', 'it', 'created', '2018-03-31 11:36:16', '2018-03-31 15:00:00', '<p>fdjfgdgf</p>', 0),
-(1, '167', 'ABCD', 'ifb', 'pscc', 'cancelled', '2018-04-21 14:30:39', '2018-04-01 15:00:00', 'apple banana', 1),
-(3, '2334-ALIB', 'Scooby-Doo Style Detective Work Needed', 'Solicitation', 'Information Technology', 'Published', '2018-04-01 12:38:59', '2017-10-31 15:00:00', 'Scooby-Doo Style Detective Work Needed', 0),
-(1, '987', 'test', 'cn', 'pscc', 'New', '2018-04-21 16:11:00', '2018-04-03 15:00:00', '<p>test</p>', 0);
+(1, '167', 'ABCD', 'ifb', 'pscc', 'Published', '2018-04-21 14:30:39', '2018-04-01 15:00:00', 'apple banana', 1),
+(3, '2334-ALIB', 'Scooby-Doo Style Detective Work Needed', 'Solicitation', 'Information Technology', 'Awarded', '2018-04-01 12:38:59', '2017-10-31 15:00:00', 'Scooby-Doo Style Detective Work Needed', 0),
+(1, '987', 'test', 'cn', 'pscc', 'Published', '2018-04-21 18:30:19', '2018-04-03 15:00:00', '<p>test 2</p>', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
