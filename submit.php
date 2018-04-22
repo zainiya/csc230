@@ -433,8 +433,48 @@ $conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['p
 mysqli_close($conn);
 }
 
+function bidderList(){
+$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	if (!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}else{
+	$sql="SELECT * from person where rid=2";
+		$res= mysqli_query($conn,$sql);
+		//$msg="";
+		if(mysqli_num_rows($res)>0){
+			$msg="<table id='currentstable' class='table table-striped table-bordered datatable'>
+			<thead>
+			<tr>
+			<th onclick='sortTable(0)'> ID # <span class='glyphicon glyphicon-sort-by-attributes-alt'></span></th>
+			<th onclick='sortTable(1)'> Name <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(2)'> Applied For <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(3)'> Applied On <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(4)'> Account Created On <span class='glyphicon glyphicon-sort'></span></th>
+			</tr>
+			</thead>";
 
+				//<td>".$row["sid"]."</td>
 
+			while($row=mysqli_fetch_assoc($res)){
+
+				$msg=$msg."<tr>
+				<td>".$row["pid"]."</td>				
+
+				<td>".$row["f_name"]." ".$row["l_name"]."</td>
+				<td></td>
+				<td></td>
+				<td>".$row["creationDate"]."</td>
+				</tr>";
+			}
+			$msg=$msg."</table>";
+			echo $msg;
+		}
+
+	
+mysqli_close($conn);
+
+}
+}
 
 
 ?>
