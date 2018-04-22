@@ -66,38 +66,15 @@ session_start();
 		<div class="container-fluid" id="solicitation">
 			<div class="container-fluid" id="solicitation-header">
 				<h2>
-					<?php				
-					if(isset($_GET['listType'])){
-						if($_GET['listType']=='Bidders'){
-							echo "<i class='fa fa-users' aria-hidden='true'></i>	Bidders";
-						}else if($_GET['listType']=='Users'){
-							echo "<i class='fa fa-user' aria-hidden='true'></i>		Users";
-						}
-					} 
-					?>
+					<i class="fa fa-envelope-o" aria-hidden="true"></i> Email
 				</h2>
 
 			</div>
 			<div class="container-fluid" id="solicitation-content">
 				
-				<?php 
-				if(isset($_GET['listType'])){
-
-					if($_GET['listType']=='Bidders'){
-						bidderList();									
-					}else if($_GET['listType']=='Users'){
-						userList();
-					}
-
-				}
-				?>		
-
 
 				
 			</div>
-
-
-
 
 		</div>
 	</div>
