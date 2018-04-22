@@ -172,12 +172,16 @@ function createsolicitation(){
 }
 }
 
-function currentSolicitation(){
+function currentSolicitation($awardedFlag=0){
 	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
+
 		$sql="SELECT * FROM solicitation where cancelflag=0 and status='Published' order by sid";
+		if($awardedFlag==1){
+			$sql="SELECT * FROM solicitation where cancelflag=0 and status='Awarded' order by sid";
+		}
 		//		(pid, sid, stitle, type, category, status, final_filing_date, description) VALUES 
 		//(".$_SESSION["pid"].", $sid, '$title' , '$type', '$category', 'created', '$newfinalfiling', '$description')";
 		$res= mysqli_query($conn,$sql);

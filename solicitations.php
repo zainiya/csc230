@@ -85,8 +85,9 @@ session_start();
 
 					</div>
 					<div id="awarded" class="tab-pane fade">
-						<h3>Menu 1</h3>
-						<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+						<br>
+						<?php currentSolicitation(1); ?>							
+						
 					</div>
 					<div id="canceled" class="tab-pane fade">
 						<br>
