@@ -214,12 +214,15 @@ function currentSolicitation(){
 
 	}
 }
-function byme(){
+function byme($archiveFLag=0){
 	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
 		$sql="SELECT * FROM solicitation where pid=".$_SESSION["pid"]." and cancelflag=0 order by sid";
+		if($archiveFLag==1){
+		$sql="SELECT * FROM solicitation where pid=".$_SESSION["pid"]." and cancelflag=0 and status!='Published' order by sid";	
+	}
 		//		(pid, sid, stitle, type, category, status, final_filing_date, description) VALUES 
 		//(".$_SESSION["pid"].", $sid, '$title' , '$type', '$category', 'created', '$newfinalfiling', '$description')";
 		$res= mysqli_query($conn,$sql);
