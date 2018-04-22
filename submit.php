@@ -225,8 +225,8 @@ function byme($archiveFLag=0){
 	}else{
 		$sql="SELECT * FROM solicitation where pid=".$_SESSION["pid"]." and cancelflag=0 order by sid";
 		if($archiveFLag==1){
-		$sql="SELECT * FROM solicitation where pid=".$_SESSION["pid"]." and cancelflag=0 and status!='Published' order by sid";	
-	}
+			$sql="SELECT * FROM solicitation where pid=".$_SESSION["pid"]." and cancelflag=0 and status!='Published' order by sid";	
+		}
 		//		(pid, sid, stitle, type, category, status, final_filing_date, description) VALUES 
 		//(".$_SESSION["pid"].", $sid, '$title' , '$type', '$category', 'created', '$newfinalfiling', '$description')";
 		$res= mysqli_query($conn,$sql);
@@ -248,24 +248,24 @@ function byme($archiveFLag=0){
 			while($row=mysqli_fetch_assoc($res)){
 				if($row['status']=="Published"){
 
-				$msg=$msg."<tr>
-				<td><a href='document.php?type=Update&dsid=".$row["sid"]."'>".$row["sid"]."</a></td>				
-				<td>".$row["stitle"]."</td>
-				<td>".$row["status"]."</td>
-				<td>".$row["final_filing_date"]."</td>
-				<td>".$row["last_updated"]."</td>
-				</tr>";
+					$msg=$msg."<tr>
+					<td><a href='document.php?type=Update&dsid=".$row["sid"]."'>".$row["sid"]."</a></td>				
+					<td>".$row["stitle"]."</td>
+					<td>".$row["status"]."</td>
+					<td>".$row["final_filing_date"]."</td>
+					<td>".$row["last_updated"]."</td>
+					</tr>";
 
 				}else{
-				$msg=$msg."<tr>
-				<td><a href='document.php?type=Update&sid=".$row["sid"]."'>".$row["sid"]."</a></td>				
-				<td>".$row["stitle"]."</td>
-				<td>".$row["status"]."</td>
-				<td>".$row["final_filing_date"]."</td>
-				<td>".$row["last_updated"]."</td>
-				</tr>";
+					$msg=$msg."<tr>
+					<td><a href='document.php?type=Update&sid=".$row["sid"]."'>".$row["sid"]."</a></td>				
+					<td>".$row["stitle"]."</td>
+					<td>".$row["status"]."</td>
+					<td>".$row["final_filing_date"]."</td>
+					<td>".$row["last_updated"]."</td>
+					</tr>";
+				}
 			}
-		}
 			$msg=$msg."</table>";
 			echo $msg;
 		}
@@ -305,26 +305,26 @@ function updatesolicitation($sid,$flag){
 }
 
 function viewAllDocument(){
-$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
-	$sql= "select * from document where sid='".$_GET['sid']."'";
+		$sql= "select * from document where sid='".$_GET['sid']."'";
 	//file_name, sid, dtitle, posted_date, due_date, file
-	$res= mysqli_query($conn,$sql);
-	$msg="<table class='table table-striped'><thead>
-<th>File Name</th>
-<th>Posted Date</th>
-<th>Due Date</th>
-<th>Option</th>
-	</thead>";
-			while($row=mysqli_fetch_assoc($res)){
-				$msg=$msg. "<tr>
-				<td><a href='".$row['file']."' target='_blank'>".$row['file_name']."</a></td>
-				<td>".$row['posted_date']."</td>
-				<td>".$row['due_date']."</td>
-				<td><a href='document.php?type=Update&sid=".$_SESSION['sid']."&delid=".$row['dno']."'><button type='button' class='btn btn-danger' id='delete' onclick='deletefn(".$row['dno'].")'><i class='glyphicon glyphicon-trash'></i> Delete</button> </td>
-				</tr>";
+		$res= mysqli_query($conn,$sql);
+		$msg="<table class='table table-striped'><thead>
+		<th>File Name</th>
+		<th>Posted Date</th>
+		<th>Due Date</th>
+		<th>Option</th>
+		</thead>";
+		while($row=mysqli_fetch_assoc($res)){
+			$msg=$msg. "<tr>
+			<td><a href='".$row['file']."' target='_blank'>".$row['file_name']."</a></td>
+			<td>".$row['posted_date']."</td>
+			<td>".$row['due_date']."</td>
+			<td><a href='document.php?type=Update&sid=".$_SESSION['sid']."&delid=".$row['dno']."'><button type='button' class='btn btn-danger' id='delete' onclick='deletefn(".$row['dno'].")'><i class='glyphicon glyphicon-trash'></i> Delete</button> </td>
+			</tr>";
 		}
 		$msg=$msg."</table>";
 		
@@ -337,42 +337,42 @@ $conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['p
 
 function deletefile($dno){
 
-$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
 		$sql="DELETE FROM document WHERE dno=$dno";
 		if (mysqli_query($conn, $sql)) {
-    $_GET['msg']='File has been deleted!!';
-} else {
-    echo "Error deleting record: " . mysqli_error($conn);
-}
+			$_GET['msg']='File has been deleted!!';
+		} else {
+			echo "Error deleting record: " . mysqli_error($conn);
+		}
 
-mysqli_close($conn);
-}
+		mysqli_close($conn);
+	}
 
 }
 
 function cancelSolicitation($cansid){
 
-$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
 		$sql="Update solicitation set cancelflag=1, status='cancelled' WHERE sid=$cansid";
 		if (mysqli_query($conn, $sql)) {
-    	
-    	echo 'Solicitation has been deleted!!';
-    	header('Location: solicitations.php');
+
+			echo 'Solicitation has been deleted!!';
+			header('Location: solicitations.php');
 		} else {
-    		echo "Error deleting record: " . mysqli_error($conn);
+			echo "Error deleting record: " . mysqli_error($conn);
 		}
 	}
-mysqli_close($conn);
+	mysqli_close($conn);
 }
 
 function cancelledSolicitation(){
-		$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
@@ -417,28 +417,29 @@ function cancelledSolicitation(){
 function publishSolicitation($pubsid){
 
 
-$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
-	$sql="update solicitation set status='Published' where sid='".$pubsid."'";
-	if (mysqli_query($conn, $sql)) {
-    	
-    	echo 'Solicitation has been Published!!';
-    	header('Location: solicitations.php');
+		$sql="update solicitation set status='Published' where sid='".$pubsid."'";
+		if (mysqli_query($conn, $sql)) {
+
+			echo 'Solicitation has been Published!!';
+			header('Location: solicitations.php');
 		} else {
-    		echo "Error deleting record: " . mysqli_error($conn);
+			echo "Error deleting record: " . mysqli_error($conn);
 		}
 	}
-mysqli_close($conn);
+	mysqli_close($conn);
 }
 
 function bidderList(){
-$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
-	$sql="SELECT * from person where rid=2";
+		$sql="SELECT * FROM person p
+		INNER JOIN bid_transaction bt ON p.pid = bt.pid AND p.rid=2";
 		$res= mysqli_query($conn,$sql);
 		//$msg="";
 		if(mysqli_num_rows($res)>0){
@@ -447,9 +448,10 @@ $conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['p
 			<tr>
 			<th onclick='sortTable(0)'> ID # <span class='glyphicon glyphicon-sort-by-attributes-alt'></span></th>
 			<th onclick='sortTable(1)'> Name <span class='glyphicon glyphicon-sort'></span></th>
-			<th onclick='sortTable(2)'> Applied For <span class='glyphicon glyphicon-sort'></span></th>
-			<th onclick='sortTable(3)'> Applied On <span class='glyphicon glyphicon-sort'></span></th>
-			<th onclick='sortTable(4)'> Account Created On <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(2)'> Email ID <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(3)'> Applied For <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(4)'> Applied On <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(5)'> Account Created On <span class='glyphicon glyphicon-sort'></span></th>
 			</tr>
 			</thead>";
 
@@ -461,8 +463,9 @@ $conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['p
 				<td>".$row["pid"]."</td>				
 
 				<td>".$row["f_name"]." ".$row["l_name"]."</td>
-				<td></td>
-				<td></td>
+				<td>".$row["email"]."</td>
+				<td>".$row["sid"]."</td>
+				<td>".$row["application_date"]."</td>
 				<td>".$row["creationDate"]."</td>
 				</tr>";
 			}
@@ -470,11 +473,58 @@ $conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['p
 			echo $msg;
 		}
 
+
+		mysqli_close($conn);
+
+	}
+}
+
+function userList(){
+	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	if (!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}else{
+		$sql="SELECT * FROM person p where rid=2 or rid=4";
+		$res= mysqli_query($conn,$sql);
+		//$msg="";
+		if(mysqli_num_rows($res)>0){
+			$msg="<table id='currentstable' class='table table-striped table-bordered datatable'>
+			<thead>
+			<tr>
+			<th onclick='sortTable(0)'> ID # <span class='glyphicon glyphicon-sort-by-attributes-alt'></span></th>
+			<th onclick='sortTable(1)'> Name <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(2)'> Email ID <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(3)'> Account Created On <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(4)'> Subscribed On <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(5)'> Is Subscribed ?<span class='glyphicon glyphicon-sort'></span></th>
+			</tr>
+			</thead>";
+
+				//<td>".$row["sid"]."</td>
+			$sflag='No';
+			while($row=mysqli_fetch_assoc($res)){
+				if($row["subscription_flag"]==0)
+					{		$sflag='No';
+			}else{
+				$sflag='Yes';
+			}
+			$msg=$msg."<tr>
+			<td>".$row["pid"]."</td>				
+			<td>".$row["f_name"]." ".$row["l_name"]."</td>
+			<td>".$row["email"]."</td>
+			<td>".$row["creationDate"]."</td>
+			<td>".$row["subscription_Date"]."</td>
+			<td>".$sflag."</td>
+			</tr>";
+		}
+		$msg=$msg."</table>";
+		echo $msg;
+	}
+
 	
-mysqli_close($conn);
+	mysqli_close($conn);
 
 }
 }
-
 
 ?>

@@ -42,10 +42,10 @@ session_start();
 							<a class="nav-link" href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> Emails</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="bidder.php"><i class="fa fa-users" aria-hidden="true"></i> Bidders</a>
+							<a class="nav-link" href="bidder.php?listType=Bidders"><i class="fa fa-users" aria-hidden="true"></i> Bidders</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#"><i class="fa fa-user" aria-hidden="true"></i> Users</a>
+							<a class="nav-link" href="bidder.php?listType=Users"><i class="fa fa-user" aria-hidden="true"></i> Users</a>
 						</li>
 
 					</ul>
@@ -65,16 +65,34 @@ session_start();
 		</div>
 		<div class="container-fluid" id="solicitation">
 			<div class="container-fluid" id="solicitation-header">
-				<h2><i class="fa fa-users" aria-hidden="true"></i>	Bidders</h2>
+				<h2>
+					<?php				
+					if(isset($_GET['listType'])){
+						if($_GET['listType']=='Bidders'){
+							echo "<i class='fa fa-users' aria-hidden='true'></i>	Bidders";
+						}else if($_GET['listType']=='Users'){
+							echo "<i class='fa fa-user' aria-hidden='true'></i>		Users";
+						}
+					} 
+					?>
+				</h2>
 
 			</div>
 			<div class="container-fluid" id="solicitation-content">
 				
-					
+				<?php 
+				if(isset($_GET['listType'])){
 
-						<?php bidderList();?>		
-						
-					
+					if($_GET['listType']=='Bidders'){
+						bidderList();									
+					}else if($_GET['listType']=='Users'){
+						userList();
+					}
+
+				}
+				?>		
+
+
 				
 			</div>
 
@@ -83,21 +101,21 @@ session_start();
 
 		</div>
 	</div>
-<script>
-  
+	<script>
 
-$('.datatable').dataTable({
-    "sPaginationType": "simple_numbers",
-    "language": {
-      "lengthMenu": "<span style='font-weight:100;'><span style='float:left;'>_MENU_ </span> records per page</span>",
-      "zeroRecords": "Nothing found - sorry",
-      "info": "Showing page _PAGE_ of _PAGES_",
-      "infoEmpty": "No records available",
-      "search":         "",
-    }
-  }); 
-$('.datatable').each(function(){
-    var datatable = $(this);
+
+		$('.datatable').dataTable({
+			"sPaginationType": "simple_numbers",
+			"language": {
+				"lengthMenu": "<span style='font-weight:100;'><span style='float:left;'>_MENU_ </span> records per page</span>",
+				"zeroRecords": "Nothing found - sorry",
+				"info": "Showing page _PAGE_ of _PAGES_",
+				"infoEmpty": "No records available",
+				"search":         "",
+			}
+		}); 
+		$('.datatable').each(function(){
+			var datatable = $(this);
         // SEARCH - Add the placeholder for Search and Turn this into in-line form control
         var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
         search_input.attr('placeholder', 'Search');
@@ -105,7 +123,7 @@ $('.datatable').each(function(){
         // LENGTH - Inline-Form control
         var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
         length_sel.addClass('form-control input-sm');
-      });
+    });
 
 </script>
 
