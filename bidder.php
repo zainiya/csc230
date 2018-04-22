@@ -39,7 +39,7 @@ session_start();
 							<a class="nav-link" href="solicitations.php"><i class="fa fa-money" aria-hidden="true"></i>	Solicitations</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> Emails</a>
+							<a class="nav-link" href="email.php"><i class="fa fa-envelope-o" aria-hidden="true"></i> Emails</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="bidder.php?listType=Bidders"><i class="fa fa-users" aria-hidden="true"></i> Bidders</a>
