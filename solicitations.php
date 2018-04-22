@@ -42,7 +42,7 @@ session_start();
 							<a class="nav-link" href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> Emails</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#"><i class="fa fa-users" aria-hidden="true"></i> Bidders</a>
+							<a class="nav-link" href="bidder.php"><i class="fa fa-users" aria-hidden="true"></i> Bidders</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#"><i class="fa fa-user" aria-hidden="true"></i> Users</a>
