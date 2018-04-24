@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2018 at 05:52 PM
+-- Generation Time: Apr 24, 2018 at 04:38 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -30,7 +30,8 @@ USE `csc230`;
 
 CREATE TABLE IF NOT EXISTS `admin` (
   `rid` int(11) NOT NULL,
-  `role` varchar(50) NOT NULL
+  `role` varchar(50) NOT NULL,
+  PRIMARY KEY (`rid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -39,8 +40,9 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 INSERT INTO `admin` (`rid`, `role`) VALUES
 (1, 'superuser'),
-(2, 'user'),
-(3, 'Evaluator');
+(2, 'Bidder'),
+(3, 'Evaluator'),
+(4, 'Subscribed User');
 
 -- --------------------------------------------------------
 
@@ -60,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `adminlogs` (
 --
 
 INSERT INTO `adminlogs` (`pid`, `lastlogin`, `incorrectcnt`, `lastincorrect`) VALUES
-(1, '2018-04-20 22:40:07', 0, '2018-04-05 18:03:35'),
+(1, '2018-04-22 22:32:23', 0, '2018-04-05 18:03:35'),
 (3, '2018-04-03 18:12:01', 0, '2018-04-03 18:09:08');
 
 -- --------------------------------------------------------
@@ -79,9 +81,17 @@ CREATE TABLE IF NOT EXISTS `bid_transaction` (
   `fee` int(11) NOT NULL,
   `score` int(11) DEFAULT NULL,
   `bidder_status` varchar(50) DEFAULT NULL,
-  `modifiedby` varchar(50) DEFAULT NULL,
+  `Modified_pid` int(11) DEFAULT NULL,
   PRIMARY KEY (`bid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `bid_transaction`
+--
+
+INSERT INTO `bid_transaction` (`bid`, `sid`, `pid`, `application_date`, `last_updated`, `eval_status`, `fee`, `score`, `bidder_status`, `Modified_pid`) VALUES
+(1, '1234', 2, '2018-04-22', '2018-04-22', 'Submitted', 100, 0, 'Under Review', 4),
+(2, '167', 6, '2018-04-22', '2018-04-22', 'Submitted', 500, 0, 'Under Review', 4);
 
 -- --------------------------------------------------------
 
@@ -131,6 +141,8 @@ CREATE TABLE IF NOT EXISTS `person` (
   `password` varchar(100) NOT NULL,
   `rid` int(11) NOT NULL,
   `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `subscription_Date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `subscription_flag` int(1) DEFAULT '1',
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
@@ -138,11 +150,13 @@ CREATE TABLE IF NOT EXISTS `person` (
 -- Dumping data for table `person`
 --
 
-INSERT INTO `person` (`pid`, `f_name`, `m_init`, `l_name`, `email`, `ssn`, `password`, `rid`, `creationDate`) VALUES
-(1, 'zainiya', 'a', 'manjiyani', 'abc@gmail.com', 1234, 'abcd', 1, '2018-03-30 14:22:29'),
-(2, 'shaaz', '', 'manjiyani', 'shaaz@gmail.com', 1234, 'shaaz', 2, '2018-03-30 14:22:29'),
-(3, 'zohra', 'a', 'manjiyani', 'zohra@gmail.com', 4567, 'zohra', 1, '2018-04-01 12:33:40'),
-(6, 'parth', 'u', 'pachchigar', 'parth@gmail.com', 7896, 'parth', 2, '2018-04-01 13:35:54');
+INSERT INTO `person` (`pid`, `f_name`, `m_init`, `l_name`, `email`, `ssn`, `password`, `rid`, `creationDate`, `subscription_Date`, `subscription_flag`) VALUES
+(1, 'zainiya', 'a', 'manjiyani', 'abc@gmail.com', 1234, 'abcd', 1, '2018-03-30 14:22:29', NULL, 1),
+(2, 'shaaz', '', 'manjiyani', 'alhirani2005@yahoo.com', 1234, 'shaaz', 2, '2018-03-30 14:22:29', NULL, 1),
+(3, 'zohra', 'a', 'manjiyani', 'zohra@gmail.com', 4567, 'zohra', 1, '2018-04-01 12:33:40', NULL, 1),
+(4, 'Sneha', '', 'Manjiyani', 'sneha.manjiyani@gmail.com', 4567, 'sneha', 3, '2018-04-22 11:07:28', NULL, 1),
+(5, 'Alim', '', 'Manjiyani', 'zaineyamanjiyani@gmail.com', 7894, 'alim', 4, '2018-04-22 11:10:16', NULL, 1),
+(6, 'parth', 'u', 'pachchigar', 'parthpachchigar@gmail.com', 7896, 'parth', 2, '2018-04-01 13:35:54', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -171,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `solicitation` (
 INSERT INTO `solicitation` (`pid`, `sid`, `stitle`, `type`, `category`, `status`, `last_updated`, `final_filing_date`, `description`, `cancelflag`) VALUES
 (1, '1234', 'xyz', 'solicitation', 'pscc', 'Published', '2018-04-20 22:30:29', '2018-03-31 15:00:00', 'computer software engineering', 0),
 (1, '12345', 'gfdgfdfgh', 'solicitation', 'it', 'created', '2018-03-31 11:36:16', '2018-03-31 15:00:00', '<p>fdjfgdgf</p>', 0),
-(1, '167', 'ABCD', 'ifb', 'pscc', 'Published', '2018-04-21 14:30:39', '2018-04-01 15:00:00', 'apple banana', 1),
+(1, '167', 'ABCD', 'ifb', 'pscc', 'cancelled', '2018-04-21 14:30:39', '2018-04-01 15:00:00', 'apple banana', 1),
 (3, '2334-ALIB', 'Scooby-Doo Style Detective Work Needed', 'Solicitation', 'Information Technology', 'Awarded', '2018-04-01 12:38:59', '2017-10-31 15:00:00', 'Scooby-Doo Style Detective Work Needed', 0),
 (1, '987', 'test', 'cn', 'pscc', 'Published', '2018-04-21 18:30:19', '2018-04-03 15:00:00', '<p>test 2</p>', 0);
 
