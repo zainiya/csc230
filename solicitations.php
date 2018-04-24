@@ -81,7 +81,8 @@ session_start();
 
 				<div class="tab-content">
 					<div id="current" class="tab-pane fade in active">
-						<?php currentSolicitation(); ?>
+						<?php $_SESSION['sid']='';
+						currentSolicitation(); ?>
 
 					</div>
 					<div id="awarded" class="tab-pane fade">
