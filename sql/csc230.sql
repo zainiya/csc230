@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 24, 2018 at 04:38 AM
+-- Generation Time: Apr 25, 2018 at 10:14 PM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `adminlogs` (
 --
 
 INSERT INTO `adminlogs` (`pid`, `lastlogin`, `incorrectcnt`, `lastincorrect`) VALUES
-(1, '2018-04-22 22:32:23', 0, '2018-04-05 18:03:35'),
+(1, '2018-04-25 15:10:54', 0, '2018-04-05 18:03:35'),
 (3, '2018-04-03 18:12:01', 0, '2018-04-03 18:09:08');
 
 -- --------------------------------------------------------
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `document` (
   `due_date` date NOT NULL,
   `file` text,
   PRIMARY KEY (`dno`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `document`
@@ -123,7 +123,8 @@ INSERT INTO `document` (`dno`, `sid`, `file_name`, `dtitle`, `posted_date`, `due
 (9, '1234', 'csc230.sql', 'uploads/csc230-1234.sql', '2018-04-26', '2018-04-26', 'uploads/csc230.sql'),
 (12, '1234', 'csc230.sql', 'csc230.sql-1234', '0000-00-00', '0000-00-00', 'uploads/csc230-1234.sql'),
 (14, '167', 'csc230.sql', 'csc230.sql-167', '2018-04-27', '2018-04-27', 'uploads/csc230-167.sql'),
-(15, '12345', 'csc230.sql', 'csc230.sql-12345', '2018-04-27', '2018-04-27', 'uploads/csc230-12345.sql');
+(15, '12345', 'csc230.sql', 'csc230.sql-12345', '2018-04-27', '2018-04-27', 'uploads/csc230-12345.sql'),
+(16, '12345', 'QUICKPAR.CPP', 'QUICKPAR.CPP-12345', '2018-04-27', '2018-04-27', 'uploads/QUICKPAR-12345.CPP');
 
 -- --------------------------------------------------------
 
@@ -174,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `solicitation` (
   `last_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `final_filing_date` datetime NOT NULL,
   `description` varchar(1000) NOT NULL,
-  `cancelflag` int(1) DEFAULT NULL,
+  `cancelflag` int(1) DEFAULT '0',
   PRIMARY KEY (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -184,10 +185,12 @@ CREATE TABLE IF NOT EXISTS `solicitation` (
 
 INSERT INTO `solicitation` (`pid`, `sid`, `stitle`, `type`, `category`, `status`, `last_updated`, `final_filing_date`, `description`, `cancelflag`) VALUES
 (1, '1234', 'xyz', 'solicitation', 'pscc', 'Published', '2018-04-20 22:30:29', '2018-03-31 15:00:00', 'computer software engineering', 0),
+(1, '1234-9876', 'TEST', 'rfp', 'pscc', 'New', '2018-04-25 15:10:00', '2018-04-25 15:00:00', '<p>TESTING IS GOING ON</p>', 0),
 (1, '12345', 'gfdgfdfgh', 'solicitation', 'it', 'created', '2018-03-31 11:36:16', '2018-03-31 15:00:00', '<p>fdjfgdgf</p>', 0),
 (1, '167', 'ABCD', 'ifb', 'pscc', 'cancelled', '2018-04-21 14:30:39', '2018-04-01 15:00:00', 'apple banana', 1),
 (3, '2334-ALIB', 'Scooby-Doo Style Detective Work Needed', 'Solicitation', 'Information Technology', 'Awarded', '2018-04-01 12:38:59', '2017-10-31 15:00:00', 'Scooby-Doo Style Detective Work Needed', 0),
-(1, '987', 'test', 'cn', 'pscc', 'Published', '2018-04-21 18:30:19', '2018-04-03 15:00:00', '<p>test 2</p>', 0);
+(1, '987', 'test', 'cn', 'pscc', 'Published', '2018-04-21 18:30:19', '2018-04-03 15:00:00', '<p>test 2</p>', 0),
+(1, '9876-7563', 'TEST AGAIN', 'rfp', 'pscc', 'New', '2018-04-25 15:14:13', '2018-04-27 15:00:00', '<p>TESTING AGAIN!!!</p>', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
