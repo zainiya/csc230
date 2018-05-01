@@ -31,18 +31,32 @@ session_start();
 				<div id="panel">
 					<?php 
 					if(isset($_POST["registerform"])){
-						submit();
+						submit();//here 2 is for bidder and make changes for admin submit for 1
 					}
 					?>
 
 					<h3>Log In</h3>
-					<div id="loginform">
-						<h4> Username</h4>
-						<input type="text"><br>
-						<h4> Password</h4>
-						<input type="password"><br><br>
-						<button type="button" class="btn btn-primary">Log In</button>
-					</div>
+					<div id="panel">
+
+						<?php 
+						if(isset($_POST["userlogin"])){
+							userlogin();
+							
+						}
+						?>
+						<form name="userlogin" action="bidderlogin.php" method="post">							
+							<div id="loginform">
+								<h4> Username</h4>
+								<input type="email" name="email"><br>
+								<h4> Password</h4>
+								<input type="password" name="password"><br><br>
+
+								<button type="submit" name="userlogin" class="btn btn-primary">Log In</button>
+							</div>
+						</form>
+
+					</div><br>
+					
 				</div><br>
 				<center><a data-toggle="modal" data-target="#myModal">New to Calpers?</a></center><br>
 				<center><a href="forget.php">Forget Password?</a></center>
@@ -69,8 +83,6 @@ session_start();
 										<br>
 										Password: <input type="password" name="p1" required> <br><br>
 										Confirm-Password <input type="password" name="p2" required><br><br>
-									
-
 									</p>
 									<button type="submit" name="registerform" onclick="verifyform()">Register</button>
 								</form>
