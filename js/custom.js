@@ -104,10 +104,22 @@ function setvalues(sid,stitle,type,category,status,final_filing_date,description
 	}
 }
 
-
-
-
-
-
-
-
+function showdetails(button){
+    var sid = button.id;
+    $.ajax({
+      url: "details.php",
+      method: "GET",
+      data: {"sid":sid},
+      success: function(response){
+        var solicitationdetails = JSON.parse(response);
+        $("#number").text(solicitationdetails.sid);
+      //$_SESSION["sid"] = $("#number").text(solicitationdetails.sid); 
+      $("#finalFilingDate").text(solicitationdetails.final_filing_date);
+      $("#type").text(solicitationdetails.type);
+      $("#category").text(solicitationdetails.category);  
+      $("#title").text(solicitationdetails.stitle);
+      $("#description").text(solicitationdetails.description);        
+    }
+  });
+  }
+  
