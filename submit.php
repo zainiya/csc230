@@ -1,4 +1,10 @@
 <?php
+
+require ("PHPMailer/src/Exception.php");
+require("PHPMailer/src/PHPMailer.php");
+require("PHPMailer/src/SMTP.php");
+
+
 date_default_timezone_set('America/Los_Angeles');
 $servername = "localhost";
 $username = "root";
@@ -116,32 +122,69 @@ function adminlogin(){
 	}
 
 }
-
-function createsolicitation(){
-	if(!empty($_POST["snumber"]) && 
-		!empty($_POST["sfinalfiling"]) &&
-		!empty($_POST["stype"]) &&
-		!empty($_POST["scategory"]) &&
-		!empty($_POST["stitle"]) &&
-		!empty($_POST["editordata"])
-	) {	$sid=$_POST["snumber"];
-		$finalfiling=$_POST["sfinalfiling"];
-	$type=$_POST["stype"];
-	$category=$_POST["scategory"];
-	$title = $_POST["stitle"];
-	$description = $_POST["editordata"];
-	$newfinalfiling= str_replace("T", " ", $finalfiling);
-
-
+function userlogin(){
+	$email=$_POST["email"];
+	$password=$_POST["password"];
+	
 	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	// Check connection
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
-	}else{
-		//add code for updating the data
-
-		$sql="SELECT * FROM solicitation WHERE sid='$sid'";
+	}else{		
+		$sql = "Select * from person where email='$email' and password='$password' and rid=2";
 		$res=mysqli_query($conn,$sql);
 		if(mysqli_num_rows($res)>0){
+			while($row = mysqli_fetch_object($res)){
+				//$document_title = $row -> file;
+				$_SESSION["username"] = $row -> f_name; 
+				$_SESSION["pid"] = $row -> pid;
+				header('Location: Dashboard.php');
+			}
+		}
+		else{
+			$sql= "Select * from person where email= '$email' and password != '$password' and rid=2";//means user have put incorrect email or password
+			$res= mysqli_query($conn,$sql);
+			if(mysqli_num_rows($res)>0){
+				echo "Entered Password is incorrect! Please try again"; }
+				else{
+				$sql= "Select * from person where email != '$email' and password = '$password' and rid=2";//means user have put incorrect email or password
+				$res= mysqli_query($conn,$sql);
+				if(mysqli_num_rows($res)>0){
+					echo "Entered UserName is incorrect! Please try again";} 
+					else{
+						echo "You are not registered user. Kindly sign up in order to proceed";} 
+					}	
+				}
+
+		//mysqli_close($conn);
+			}
+
+		}
+		function createsolicitation(){
+			if(!empty($_POST["snumber"]) && 
+				!empty($_POST["sfinalfiling"]) &&
+				!empty($_POST["stype"]) &&
+				!empty($_POST["scategory"]) &&
+				!empty($_POST["stitle"]) &&
+				!empty($_POST["editordata"])
+			) {	$sid=$_POST["snumber"];
+				$finalfiling=$_POST["sfinalfiling"];
+			$type=$_POST["stype"];
+			$category=$_POST["scategory"];
+			$title = $_POST["stitle"];
+			$description = $_POST["editordata"];
+			$newfinalfiling= str_replace("T", " ", $finalfiling);
+
+
+			$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}else{
+		//add code for updating the data
+
+				$sql="SELECT * FROM solicitation WHERE sid='$sid'";
+				$res=mysqli_query($conn,$sql);
+				if(mysqli_num_rows($res)>0){
 			$sql="UPDATE solicitation SET stitle='$title', type='$type', category='$category', last_updated=now(), description='$description' where sid='$sid'";// update query needs to be fired final filinig date updating feature is left
 			if(mysqli_query($conn,$sql)){
 				
@@ -284,6 +327,7 @@ function updatesolicitation($sid,$flag){
 			$sql="SELECT * from solicitation where sid='$sid' and pid=". $_SESSION["pid"];
 		}if($flag==1){
 			$sql="SELECT * from solicitation where sid='$sid'";
+
 		}
 		//echo $sql;
 		$res= mysqli_query($conn,$sql);
@@ -309,10 +353,16 @@ function viewAllDocument(){
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
-		$sql= "select * from document where sid='".$_GET['sid']."'";
+		if(isset($_GET['sid'])){
+			$solid=$_GET['sid'];
+
+		}else if (isset($_GET['dsid'])) {
+			$solid=$_GET['dsid'];
+		}
+		$sql= "select * from document where sid='".$solid."'";
 	//file_name, sid, dtitle, posted_date, due_date, file
 		$res= mysqli_query($conn,$sql);
-		$msg="<table class='table table-striped'><thead>
+		$msg="<table id='documentTable' class='table table-striped'><thead>
 		<th>File Name</th>
 		<th>Posted Date</th>
 		<th>Due Date</th>
@@ -323,8 +373,10 @@ function viewAllDocument(){
 			<td><a href='".$row['file']."' target='_blank'>".$row['file_name']."</a></td>
 			<td>".$row['posted_date']."</td>
 			<td>".$row['due_date']."</td>
-			<td><a href='document.php?type=Update&sid=".$_SESSION['sid']."&delid=".$row['dno']."'><button type='button' class='btn btn-danger' id='delete' onclick='deletefn(".$row['dno'].")'><i class='glyphicon glyphicon-trash'></i> Delete</button> </td>
+			<td><a href='document.php?type=Update&sid=".$_SESSION['sid']."&delid=".$row['dno']."' class='btn btn-danger' id='delete'><i class='glyphicon glyphicon-trash'></i> Delete </td>
 			</tr>";
+			/*			<td><a href='document.php?type=Update&sid=".$_SESSION['sid']."&delid=".$row['dno']."' ><button type='button' class='btn btn-danger' id='delete' onclick='deletefn(".$row['dno'].")'><i class='glyphicon glyphicon-trash'></i> Delete</button> </td>*/
+
 		}
 		$msg=$msg."</table>";
 		
@@ -526,5 +578,153 @@ function userList(){
 
 }
 }
+
+function send_email($group,$subject,$message,$file=null){
+ //$target_file_arr=$file; this is left
+//$dir_to_search = $file['name'];
+	//echo 'file: '.$dir_to_search.'<br />';
+	//print_r($dir_to_search);
+	//echo '<br />';
+//exit();
+
+
+  //$target_dir = "uploads/";
+//$target_file = basename($target_file_arr['tmp_name']);
+//$target_file = $file['tmp_name']; THIS IS LEFT
+ //$info = pathinfo($target_file);
+
+    //var_dump($info);
+    //exit();
+	$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+$mail->isSMTP();                            // Set mailer to use SMTP
+$mail->Mailer = 'smtp';
+$mail->SMTPAuth = true;                     // Enable SMTP authentication
+$mail->Host = 'tls://smtp.gmail.com:587';             // Specify main and backup SMTP servers
+//$mail->Port = 587;                          // TCP port to connect to
+
+$mail->SMTPDebug = 0;
+//$mail->SMTPSecure = 'tsl';
+//$mail->SMTPSecure = 'tsl';                  // Enable TLS encryption, `ssl` also accepted
+$mail->IsHTML(true);  // Set email format to HTML
+//$mail->SingleTo = true; // if you want to send a same email to multiple users. multiple emails will be sent one-by-one.
+
+
+$mail->Username = 'zaineyamanjiyani@gmail.com';  // SMTP username
+$mail->Password = 'khatijamanjiyani'; // SMTP password
+
+$mail->SetFrom('zaineyamanjiyani@gmail.com', 'Zainiya Manjiyani');
+$mail->Subject = $subject;
+
+//$mail->addReplyTo('info@example.com', 'CodexWorld');
+//$mail->AddAddress('alhirani2005@yahoo.com');   // Add a recipient
+//$mail->AddAddress('zaineyamanjiyani@gmail.com');   // Add a recipient
+//$mail->addCC('cc@example.com');
+$cnt=0;
+$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+if (!$conn) {
+	die("Connection failed: " . mysqli_connect_error());
+}else{
+	$sql="";
+	if($group==1){
+		$sql="SELECT * FROM person p where rid=2 and subscription_flag=1";
+	}else if($group==2){
+		$sql="SELECT * FROM person p where (rid=2 or rid=4) and subscription_flag=1";
+	}
+	$res= mysqli_query($conn,$sql);
+	
+	while($row=mysqli_fetch_assoc($res)){
+		$cnt++;
+		$mail->addBCC($row['email']);
+		//$mail->addBCC('zaineyamanjiyani@gmail.com');   // Add a recipient
+	}
+
+}
+
+//$mail->addAttachment($target_file); THIS IS LEFT
+
+$bodyContent = '<h1>Email From Calpers</h1>';
+$bodyContent .= '<p>'.$message.'</p>';
+
+
+$mail->Body    = $bodyContent;
+
+if(!$mail->Send()) {
+	echo 'Message could not be sent.';
+	echo 'Mailer Error: ' . $mail->ErrorInfo;
+} else {
+		echo "<b>Email has been sent to ".$cnt." users.</b>";
+	
+}
+
+}
+
+function publish_dashboard(){
+	$status='Published';
+	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+	if (!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}else{
+		$sql="SELECT * FROM solicitation where status = '$status' and final_filing_date > now() order by sid";
+		$res= mysqli_query($conn,$sql);
+
+		if(mysqli_num_rows($res)>0){
+			$msg="<table id='currentstable' class='table table-striped table-bordered datatable'>
+			<thead>
+			
+			<th onclick='sortTable(0)'> #  <span class='glyphicon glyphicon-sort-by-attributes-alt'></span></th>
+			<th onclick='sortTable(1)'> Solicitation Title <span class='glyphicon glyphicon-sort'></span></th>
+			<th onclick='sortTable(2)'>Due Date <span class='glyphicon glyphicon-sort'></span></th>
+
+			<th> Action</th>
+			
+			</thead>";
+
+
+			while($row=mysqli_fetch_object($res)){
+				$msg=$msg."<tr>
+				<td>".$row->sid."</td>				
+				<td>".$row->stitle."</td>
+				<td>".$row->final_filing_date ."</td>
+				<td><button class = 'btn btn-success' data-toggle = 'modal' data-target = '#myModal' id =". $row->sid." onclick='showdetails(this)'><b>DETAILS</b></button></td>
+				</tr>";
+			}
+			$msg=$msg."</table>";
+			echo $msg; 						
+		}
+	}
+}
+
+/*function solicitation_description(){
+	$conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}else{ 
+				$sql="SELECT * FROM document where sid= ". $_SESSION["sid"] ." ";
+				$res= mysqli_query($conn,$sql);
+
+				if (mysqli_num_rows($res)>0){
+					while($row = mysqli_fetch_object($res)){
+						
+						$document_title = $row -> dtitle;
+						$user = $_SESSION["pid"];
+						$sid = $_SESSION["sid"];
+						$sql1 = "INSERT INTO bidder_document_upload VALUES('$user','$sid','$document_title')";
+						$res1= mysqli_query($conn,$sql1);
+						
+					
+					}
+				$sql="SELECT * FROM solicitation where sid= ". $_SESSION["sid"] ." ";		
+
+
+
+
+				}
+
+
+
+			}
+}*/
+
 
 ?>
