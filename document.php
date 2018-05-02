@@ -29,8 +29,6 @@ session_start();
 	<!--file upload-->
 
 
-
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="js/custom.js"></script>
@@ -171,8 +169,8 @@ session_start();
 							<div class="modal-body">
 
 								<ul class="nav nav-tabs">
-									<li class="active"><a data-toggle="tab" href="#edit">Edit</a></li>
-									<li><a data-toggle="tab" href="#view">View</a></li>
+									<li class="active" id='editli'><a data-toggle="tab" href="#edit"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a></li>
+									<li id='viewli'><a data-toggle="tab" href="#view">View</a></li>
 								</ul>
 
 								<div class="tab-content">
@@ -230,6 +228,7 @@ document.getElementById('files').addEventListener('change', handleFileSelect, fa
 
 	if(isset($_GET['delid'])){
 		deletefile($_GET['delid']);
+		header('Location: document.php?type=Update&sid='.$_SESSION['sid']);
 	}
 
 	?>
@@ -264,6 +263,7 @@ document.getElementById('files').addEventListener('change', handleFileSelect, fa
 if(isset($_GET['dsid'])){
 	$_SESSION['sid']=$_GET['dsid'];
 	updatesolicitation($_REQUEST['dsid'],1);
+
 }
 ?>
 <script>
@@ -388,6 +388,8 @@ if(isset($_GET['dsid'])){
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 <script src="js/custom.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 
 
 

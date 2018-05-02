@@ -1,4 +1,18 @@
 <?php
+//require 'PHPMailer/PHPMailerAutoload.php';
+//namespace 'PHPMailer';
+//require ("PHPMailer/src/Exception.php");
+//require("PHPMailer/src/PHPMailer.php");
+//require("PHPMailer/src/SMTP.php");
+
+//use 'PHPMailer/PHPMailer';
+//ini_set("SMTP","ssl://smtp.gmail.com");
+//ini_set("smtp_port","465");
+
+ //echo (extension_loaded('openssl')?'SSL loaded':'SSL not loaded')."\n";
+?>
+
+<?php
 session_start();
 
 ?>
@@ -17,7 +31,7 @@ session_start();
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
-	<script src="js/custom.js"></script>
+	<!--<script src="js/custom.js"></script>-->
 </head>
 <body>
 	<?php require_once('submit.php'); ?>
@@ -66,15 +80,40 @@ session_start();
 		<div class="container-fluid" id="solicitation">
 			<div class="container-fluid" id="solicitation-header">
 				<h2>
-					<i class="fa fa-envelope-o" aria-hidden="true"></i> Email
+					<i class='fa fa-envelope-o' aria-hidden='true'></i>	Email
 				</h2>
 
 			</div>
 			<div class="container-fluid" id="solicitation-content">
-				
+				<div class="col-sm-3"></div>
+				<div class="col-sm-6">
+					<?php 
+						if(isset($_POST['group1'])){
+								send_email(1,$_POST['subject'], $_POST['message'],$_FILES['emaildoc']);
+						}
+						if(isset($_POST['group2'])){
+								send_email(2, $_POST['subject'], $_POST['message'],$_FILES['emaildoc']);
+						}
+
+					?>
+					<form name="sendemail" action="email.php" method="post" enctype="multipart/form-data">
+						<h3>Subject : </h3> <input type="text" class="form-control" id="subject" name="subject"><br>
+						<h3>Message - Box:</h3>
+						<!--<textarea rows="4" cols="50" class="form-control" id="message" name="message"></textarea>-->
+						<textarea id="message" name="message" style="height: 100px;" required></textarea>
+						<input type='file' id='emaildoc' name='emaildoc'>
+						<br>
+						<button class="btn btn-primary" type="submit" name="group1" >Email Bidders</button> 
+						<button class="btn btn-warning" type="submit" name="group2" >Email Subscribed Users</button>
+					</form>
+				</div>
+				<div class="col-sm-3"></div>
 
 				
 			</div>
+
+
+
 
 		</div>
 	</div>
@@ -103,7 +142,22 @@ session_start();
     });
 
 </script>
+<script>
+	$(document).ready(function() {
+		$('#message').summernote({
+			height:200,
+			focus:true
+		});
+	});
+</script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+<script src="js/custom.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+
 
 
 </body>
 </html>
+

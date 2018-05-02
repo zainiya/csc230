@@ -97,7 +97,14 @@ function setvalues(sid,stitle,type,category,status,final_filing_date,description
 	document.getElementById("scategory").disabled=true;
 	document.getElementById("summernote").disabled=true;
 	document.getElementById("submit").style.display='none';
-  document.getElementById("upbtn").style.display='none';
+  document.getElementById("upbtn").innerHTML="List of documents";
+  document.getElementById("edit").style.display='none';
+  document.getElementById("editli").style.display='none';
+  $("#viewli").tab('show');
+  document.getElementById("view").style.display='block';
+  document.getElementById("view").style.opacity='1';
+  $('#documentTable td:last-child,#documentTable th:last-child').remove();
+  //document.getElementById("upbtn").style.display='none';
   document.getElementById("cancelSolicitation").style.display='none';
   document.getElementById("PublishSolicitation").style.display='none';  
 	document.getElementById("sfinalfiling").disabled=true;
