@@ -158,7 +158,7 @@ session_start();
 
 				<!-- Modal -->
 				<div class="modal fade" id="upload-document" role="dialog">
-					<div class="modal-dialog modal-lg">
+					<div class="modal-dialog modal-lg" style="width: 95%;">
 
 						<!-- Modal content-->
 						<div class="modal-content">
@@ -190,14 +190,14 @@ session_start();
     // files is a FileList of File objects. List some properties.
     var output = [];
     for (var i = 0, f; f = files[i]; i++) {
-    	output.push('<tr><td><strong>', escape(f.name), '</strong> </td> <td>',
+    	output.push('<tr><td><input type="text" name="title'+i+'" value="',escape(f.name),'"></td><td><strong>', escape(f.name), '</strong> </td> <td>',
     		f.size, ' bytes</td><td>',
     		f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
     		'</td><td><input type="date" name="d'+i+'" style="width:150px;"></td><td>'+
     		'<button type="button" class="btn btn-danger" id="delete"><i class="glyphicon glyphicon-trash"></i> Delete</button> '+
     		'</td></tr>');
     }
-    document.getElementById('list').innerHTML = "<table class='table table-striped table-bordered'><thead><th>File Name</th><th>File Size</th><th>Last modified</th><th>Set Due Date</th><th>Edit Options</th></thead>" + output.join('') + "</table> <button type='submit' name='up' class='btn btn-primary'> <i class='glyphicon glyphicon-upload'></i> Start Upload </button>";
+    document.getElementById('list').innerHTML = "<table class='table table-striped table-bordered'><thead><th>Set Title</th><th>File Name</th><th>File Size</th><th>Last modified</th><th>Set Due Date</th><th>Edit Options</th></thead>" + output.join('') + "</table> <button type='submit' name='up' class='btn btn-primary'> <i class='glyphicon glyphicon-upload'></i> Start Upload </button>";
     $('#delete').click(function(e){
     	$(this).closest('tr').remove();
     });
