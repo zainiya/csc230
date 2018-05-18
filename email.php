@@ -101,7 +101,7 @@ session_start();
 						<h3>Message - Box:</h3>
 						<!--<textarea rows="4" cols="50" class="form-control" id="message" name="message"></textarea>-->
 						<textarea id="message" name="message" style="height: 100px;" required></textarea>
-						<input type='file' id='emaildoc' name='emaildoc'>
+						<!--<input type='file' id='emaildoc' name='emaildoc'>-->
 						<br>
 						<button class="btn btn-primary" type="submit" name="group1" >Email Bidders</button> 
 						<button class="btn btn-warning" type="submit" name="group2" >Email Subscribed Users</button>
