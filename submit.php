@@ -57,7 +57,7 @@ function adminlogin(){
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
 		
-		$sql = "Select * from person where email='$email' and password='$password' and rid=1";
+		$sql = "Select * from person where email='$email' and password='$password' and (rid=1 or rid=3)";
 		$res=mysqli_query($conn,$sql);
 
 		if(mysqli_num_rows($res)>0){
@@ -78,13 +78,17 @@ function adminlogin(){
 					$_SESSION["username"] = $row['f_name'];
 					$_SESSION["user"] = $email;
 					$_SESSION["pid"] = $row['pid'];
-					header('Location: solicitations.php');
+					if($row['rid']==1){
+					header('Location: solicitations.php');}
+				if($row['rid']==3){
+					header('Location: bidEvaluator.php');}
+						
 				}
 			}
 			
 		}else{
 
-			$sql= "Select * from person where (email= '$email' or password= '$password' ) and rid=1";//means user have put incorrect email or password
+			$sql= "Select * from person where (email= '$email' or password= '$password' ) and (rid=1 or rid=3)";//means user have put incorrect email or password
 			$res= mysqli_query($conn,$sql);
 
 			if(mysqli_num_rows($res)>0){
@@ -493,7 +497,7 @@ function bidderList(){
 		die("Connection failed: " . mysqli_connect_error());
 	}else{
 		$sql="SELECT * FROM person p
-		INNER JOIN bid_transaction bt ON p.pid = bt.pid AND p.rid=2";
+		INNER JOIN bid_transactions bt ON p.pid = bt.bidder_id AND p.rid=2";
 		$res= mysqli_query($conn,$sql);
 		//$msg="";
 		if(mysqli_num_rows($res)>0){
@@ -518,8 +522,8 @@ function bidderList(){
 
 				<td>".$row["f_name"]." ".$row["l_name"]."</td>
 				<td>".$row["email"]."</td>
-				<td>".$row["sid"]."</td>
-				<td>".$row["application_date"]."</td>
+				<td>".$row["bid_id"]."</td>
+				<td>".$row["Date_submtd"]."</td>
 				<td>".$row["creationDate"]."</td>
 				</tr>";
 			}
