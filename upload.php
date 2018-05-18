@@ -6,6 +6,7 @@ $username = "root";
 $password = "";
 $dbname = "csc230";
 if(isset($_POST['up'])){
+
     $target_dir = "uploads/";
     $target_file_arr=$_FILES["files"]; 
     var_dump($target_file_arr);
@@ -15,6 +16,7 @@ if(isset($_POST['up'])){
     for($i=0 ; $i<count($target_file_arr['name']) ; $i++)
     {
         $date = $_POST['d'.$i];
+        $fileTitle = $_POST['title'.$i];
         var_dump($date);
         $target_file = $target_dir . basename($target_file_arr['name'][$i]);
 var_dump($target_file);
@@ -33,8 +35,8 @@ $f=$target_dir . basename($file_name.'-'.$_SESSION['sid'].'.'.$info['extension']
                 die("Connection failed: " . mysqli_connect_error());
             }else{
 
-                $sql="insert into document (file_name, sid, dtitle, posted_date, due_date, file) values 
-                ('".$target_file_arr['name'][$i]."','".$_SESSION['sid']."','".$target_file_arr['name'][$i]."-".$_SESSION['sid']."','".$date."','".$date."','".$f."')";
+                $sql="insert into document (file_name, sid, dtitle, due_date, file) values 
+                ('".$target_file_arr['name'][$i]."','".$_SESSION['sid']."','".$fileTitle."','".$date."','".$f."')";
 
                 if (mysqli_query($conn,$sql) === TRUE) {
                     echo "The file ". basename( $target_file_arr['name'][$i]). " has been uploaded.";                
