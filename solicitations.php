@@ -75,7 +75,7 @@ session_start();
 					<li class="active"><a data-toggle="tab" href="#current">Current</a></li>
 					<li><a data-toggle="tab" href="#awarded">Awarded</a></li>
 					<li><a data-toggle="tab" href="#canceled">Canceled</a></li>
-					<li><a data-toggle="tab" href="#archive">Archive</a></li>
+					<li><a data-toggle="tab" href="#archive">Pending</a></li>
 					<li><a data-toggle="tab" href="#byme">Created by Me</a></li>
 				</ul>
 
