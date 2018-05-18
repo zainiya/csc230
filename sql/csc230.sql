@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 18, 2018 at 12:41 AM
+-- Generation Time: May 18, 2018 at 03:49 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -62,8 +62,39 @@ CREATE TABLE IF NOT EXISTS `adminlogs` (
 --
 
 INSERT INTO `adminlogs` (`pid`, `lastlogin`, `incorrectcnt`, `lastincorrect`) VALUES
-(1, '2018-05-17 17:27:25', 0, '2018-04-05 18:03:35'),
-(3, '2018-04-03 18:12:01', 0, '2018-04-03 18:09:08');
+(1, '2018-05-17 18:06:54', 0, '2018-04-05 18:03:35'),
+(3, '2018-04-03 18:12:01', 0, '2018-04-03 18:09:08'),
+(4, '2018-05-17 18:07:17', 0, '2018-05-17 18:01:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bidder_documents`
+--
+
+CREATE TABLE IF NOT EXISTS `bidder_documents` (
+  `dno` int(11) NOT NULL AUTO_INCREMENT,
+  `bid_trans_id` int(9) DEFAULT NULL,
+  `file_name` varchar(100) NOT NULL,
+  `dtitle` varchar(150) NOT NULL,
+  `posted_date` date NOT NULL,
+  `file` text,
+  PRIMARY KEY (`dno`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+--
+-- Dumping data for table `bidder_documents`
+--
+
+INSERT INTO `bidder_documents` (`dno`, `bid_trans_id`, `file_name`, `dtitle`, `posted_date`, `file`) VALUES
+(2, 1, 'Data- Centric Architecture style.pptx', 'Data- Centric Architecture style.pptx', '2018-04-28', 'uploads/Data- Centric Architecture style.pptx'),
+(3, 2, 'Data- Centric Architecture style.pptx', 'Data- Centric Architecture style.pptx', '2018-04-24', 'uploads/Data- Centric Architecture style.pptx'),
+(5, 3, 'csc230.sql', 'csc230.sql-987', '2018-04-25', 'uploads/csc230.sql'),
+(6, 4, 'Data- Centric Architecture style.pptx', 'Data- Centric Architecture style.pptx-987', '2018-04-26', 'uploads/Data- Centric Architecture style.pptx'),
+(8, 5, 'csc230.sql', 'csc230.sql-1234', '2018-04-26', 'uploads/csc230.sql'),
+(9, 6, 'csc230.sql', 'uploads/csc230-1234.sql', '2018-04-26', 'uploads/csc230.sql'),
+(14, 7, 'csc230.sql', 'csc230.sql-167', '2018-04-27', 'uploads/csc230-167.sql'),
+(15, 8, 'csc230.sql', 'csc230.sql-12345', '2018-04-27', 'uploads/csc230-12345.sql');
 
 -- --------------------------------------------------------
 
@@ -73,7 +104,7 @@ INSERT INTO `adminlogs` (`pid`, `lastlogin`, `incorrectcnt`, `lastincorrect`) VA
 
 CREATE TABLE IF NOT EXISTS `bid_transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bid_id` int(11) NOT NULL,
+  `bid_id` varchar(9) NOT NULL,
   `bidder_id` int(11) NOT NULL,
   `Date_submtd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `DT_Modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -85,6 +116,21 @@ CREATE TABLE IF NOT EXISTS `bid_transactions` (
   `ModifiedBy` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `bid_transactions`
+--
+
+INSERT INTO `bid_transactions` (`id`, `bid_id`, `bidder_id`, `Date_submtd`, `DT_Modified`, `Eval_Status`, `Bid_Amount`, `Score`, `comments`, `Bidder_Status`, `ModifiedBy`) VALUES
+(1, '1', 3, '2018-03-01 03:05:04', '2018-03-19 19:33:21', 'Accepted', 50, 50, 'test1', 'Under Review', NULL),
+(2, '1', 2, '2018-03-02 10:09:13', '2018-03-19 19:33:21', 'Accepted', 0, 0, '', 'Under Review', NULL),
+(3, '1', 4, '2018-03-03 07:07:14', '2018-03-19 19:33:21', 'Scored', 500, 50, '', 'Under Review', NULL),
+(4, '1', 5, '2018-03-04 04:16:18', '2018-03-19 19:33:21', 'Rejected', 0, 0, '', 'Under Review', NULL),
+(5, '2', 1, '2018-03-05 07:09:00', '2018-03-19 19:33:21', 'Scored', 23423, 2342, 'test2', 'Under Review', NULL),
+(6, '2', 10, '2018-03-06 00:00:00', '2018-03-19 19:33:21', 'Accepted', 0, 0, '', 'Under Review', NULL),
+(7, 'ABCD-1234', 6, '2018-03-07 06:21:29', '2018-03-19 19:33:21', 'Scored', 10, 10, 'blah blah blah', 'Under Review', NULL),
+(8, '3', 5, '2018-03-07 07:16:11', '2018-03-19 19:33:21', 'Submitted', 0, 0, '', 'Under Review', NULL),
+(9, '1', 6, '2018-04-05 05:30:40', '2018-04-05 05:30:40', 'Accepted', 0, 0, '', 'Under Review', NULL);
 
 -- --------------------------------------------------------
 
@@ -207,7 +253,7 @@ INSERT INTO `solicitation` (`pid`, `sid`, `stitle`, `type`, `category`, `status`
 (3, '2334-ALIB', 'Scooby-Doo Style Detective Work Needed', 'Solicitation', 'Information Technology', 'Awarded', '2018-04-01 12:38:59', '2017-10-31 15:00:00', 'Scooby-Doo Style Detective Work Needed', 0),
 (1, '987', 'test', 'cn', 'pscc', 'Published', '2018-04-21 18:30:19', '2018-04-03 15:00:00', '<p>test 2</p>', 0),
 (1, '9876-7563', 'TEST AGAIN', 'rfp', 'pscc', 'New', '2018-04-25 15:14:13', '2018-04-27 15:00:00', '<p>TESTING AGAIN!!!</p>', 0),
-(1, 'ABCD-1234', 'ABCD TEST', 'ifb', 'it', 'Published', '2018-05-01 13:54:13', '2018-05-31 15:00:00', 'TEST HELLO WORLD', 0),
+(1, 'ABCD-1234', 'ABCD TEST', 'ifb', 'it', 'Published', '2018-05-01 13:54:13', '2018-05-01 15:00:00', 'TEST HELLO WORLD', 0),
 (1, 'XZYR-4567', 'TEST ', 'ifb', 'it', 'Published', '2018-05-01 17:49:45', '2018-05-25 15:00:00', '<p>HELLO</p>', 0);
 
 -- --------------------------------------------------------
