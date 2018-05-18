@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 18, 2018 at 03:49 AM
+-- Generation Time: May 18, 2018 at 04:52 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -62,9 +62,9 @@ CREATE TABLE IF NOT EXISTS `adminlogs` (
 --
 
 INSERT INTO `adminlogs` (`pid`, `lastlogin`, `incorrectcnt`, `lastincorrect`) VALUES
-(1, '2018-05-17 18:06:54', 0, '2018-04-05 18:03:35'),
+(1, '2018-05-17 21:17:38', 0, '2018-04-05 18:03:35'),
 (3, '2018-04-03 18:12:01', 0, '2018-04-03 18:09:08'),
-(4, '2018-05-17 18:07:17', 0, '2018-05-17 18:01:54');
+(4, '2018-05-17 21:28:02', 0, '2018-05-17 18:01:54');
 
 -- --------------------------------------------------------
 
@@ -124,12 +124,12 @@ CREATE TABLE IF NOT EXISTS `bid_transactions` (
 INSERT INTO `bid_transactions` (`id`, `bid_id`, `bidder_id`, `Date_submtd`, `DT_Modified`, `Eval_Status`, `Bid_Amount`, `Score`, `comments`, `Bidder_Status`, `ModifiedBy`) VALUES
 (1, '1', 3, '2018-03-01 03:05:04', '2018-03-19 19:33:21', 'Accepted', 50, 50, 'test1', 'Under Review', NULL),
 (2, '1', 2, '2018-03-02 10:09:13', '2018-03-19 19:33:21', 'Accepted', 0, 0, '', 'Under Review', NULL),
-(3, '1', 4, '2018-03-03 07:07:14', '2018-03-19 19:33:21', 'Scored', 500, 50, '', 'Under Review', NULL),
+(3, '1234', 4, '2018-03-03 07:07:14', '2018-03-19 19:33:21', 'Scored', 500, 50, '', 'Under Review', NULL),
 (4, '1', 5, '2018-03-04 04:16:18', '2018-03-19 19:33:21', 'Rejected', 0, 0, '', 'Under Review', NULL),
-(5, '2', 1, '2018-03-05 07:09:00', '2018-03-19 19:33:21', 'Scored', 23423, 2342, 'test2', 'Under Review', NULL),
-(6, '2', 10, '2018-03-06 00:00:00', '2018-03-19 19:33:21', 'Accepted', 0, 0, '', 'Under Review', NULL),
+(5, '1234', 1, '2018-03-05 07:09:00', '2018-03-19 19:33:21', 'Scored', 23423, 2342, 'test2', 'Under Review', NULL),
+(6, '987', 10, '2018-03-06 00:00:00', '2018-03-19 19:33:21', 'Accepted', 0, 0, '', 'Under Review', NULL),
 (7, 'ABCD-1234', 6, '2018-03-07 06:21:29', '2018-03-19 19:33:21', 'Scored', 10, 10, 'blah blah blah', 'Under Review', NULL),
-(8, '3', 5, '2018-03-07 07:16:11', '2018-03-19 19:33:21', 'Submitted', 0, 0, '', 'Under Review', NULL),
+(8, 'XZYR-4567', 5, '2018-03-07 07:16:11', '2018-03-19 19:33:21', 'Submitted', 0, 0, '', 'Under Review', NULL),
 (9, '1', 6, '2018-04-05 05:30:40', '2018-04-05 05:30:40', 'Accepted', 0, 0, '', 'Under Review', NULL);
 
 -- --------------------------------------------------------
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `document` (
   `due_date` date NOT NULL,
   `file` text,
   PRIMARY KEY (`dno`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `document`
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `eval_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `eval_status`
@@ -180,7 +180,8 @@ INSERT INTO `eval_status` (`id`, `description`) VALUES
 (1, 'Submitted'),
 (2, 'Accepted'),
 (3, 'Rejected'),
-(4, 'Scored');
+(4, 'Scored'),
+(5, 'Award');
 
 -- --------------------------------------------------------
 
@@ -246,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `solicitation` (
 --
 
 INSERT INTO `solicitation` (`pid`, `sid`, `stitle`, `type`, `category`, `status`, `last_updated`, `final_filing_date`, `description`, `cancelflag`) VALUES
-(1, '1234', 'xyz', 'solicitation', 'pscc', 'Published', '2018-04-20 22:30:29', '2018-05-31 15:00:00', 'computer software engineering', 0),
+(1, '1234', 'xyz', 'solicitation', 'pscc', 'Published', '2018-04-20 22:30:29', '2018-05-01 15:00:00', 'computer software engineering', 0),
 (1, '1234-9876', 'TEST', 'rfp', 'pscc', 'New', '2018-04-25 15:10:00', '2018-05-18 15:00:00', '<p>TESTING IS GOING ON</p>', 0),
 (1, '12345', 'gfdgfdfgh', 'solicitation', 'it', 'created', '2018-03-31 11:36:16', '2018-03-31 15:00:00', '<p>fdjfgdgf</p>', 0),
 (1, '167', 'ABCD', 'ifb', 'pscc', 'cancelled', '2018-04-21 14:30:39', '2018-04-01 15:00:00', 'apple banana', 1),
@@ -254,7 +255,7 @@ INSERT INTO `solicitation` (`pid`, `sid`, `stitle`, `type`, `category`, `status`
 (1, '987', 'test', 'cn', 'pscc', 'Published', '2018-04-21 18:30:19', '2018-04-03 15:00:00', '<p>test 2</p>', 0),
 (1, '9876-7563', 'TEST AGAIN', 'rfp', 'pscc', 'New', '2018-04-25 15:14:13', '2018-04-27 15:00:00', '<p>TESTING AGAIN!!!</p>', 0),
 (1, 'ABCD-1234', 'ABCD TEST', 'ifb', 'it', 'Published', '2018-05-01 13:54:13', '2018-05-01 15:00:00', 'TEST HELLO WORLD', 0),
-(1, 'XZYR-4567', 'TEST ', 'ifb', 'it', 'Published', '2018-05-01 17:49:45', '2018-05-25 15:00:00', '<p>HELLO</p>', 0);
+(1, 'XZYR-4567', 'TEST ', 'ifb', 'it', 'Published', '2018-05-01 17:49:45', '2018-05-05 15:00:00', '<p>HELLO</p>', 0);
 
 -- --------------------------------------------------------
 
