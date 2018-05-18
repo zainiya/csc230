@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 18, 2018 at 12:07 AM
+-- Generation Time: May 18, 2018 at 12:41 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -62,36 +62,29 @@ CREATE TABLE IF NOT EXISTS `adminlogs` (
 --
 
 INSERT INTO `adminlogs` (`pid`, `lastlogin`, `incorrectcnt`, `lastincorrect`) VALUES
-(1, '2018-05-17 15:45:29', 0, '2018-04-05 18:03:35'),
+(1, '2018-05-17 17:27:25', 0, '2018-04-05 18:03:35'),
 (3, '2018-04-03 18:12:01', 0, '2018-04-03 18:09:08');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bid_transaction`
+-- Table structure for table `bid_transactions`
 --
 
-CREATE TABLE IF NOT EXISTS `bid_transaction` (
-  `bid` int(11) NOT NULL AUTO_INCREMENT,
-  `sid` varchar(9) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `application_date` date NOT NULL,
-  `last_updated` date NOT NULL,
-  `eval_status` varchar(30) DEFAULT NULL,
-  `fee` int(11) NOT NULL,
-  `score` int(11) DEFAULT NULL,
-  `bidder_status` varchar(50) DEFAULT NULL,
-  `Modified_pid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`bid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `bid_transaction`
---
-
-INSERT INTO `bid_transaction` (`bid`, `sid`, `pid`, `application_date`, `last_updated`, `eval_status`, `fee`, `score`, `bidder_status`, `Modified_pid`) VALUES
-(1, '1234', 2, '2018-04-22', '2018-04-22', 'Submitted', 100, 0, 'Under Review', 4),
-(2, '167', 6, '2018-04-22', '2018-04-22', 'Submitted', 500, 0, 'Under Review', 4);
+CREATE TABLE IF NOT EXISTS `bid_transactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bid_id` int(11) NOT NULL,
+  `bidder_id` int(11) NOT NULL,
+  `Date_submtd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `DT_Modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Eval_Status` varchar(50) NOT NULL DEFAULT 'Submitted',
+  `Bid_Amount` int(11) NOT NULL DEFAULT '0',
+  `Score` int(11) NOT NULL DEFAULT '0',
+  `comments` varchar(250) NOT NULL,
+  `Bidder_Status` varchar(50) NOT NULL DEFAULT 'Under Review',
+  `ModifiedBy` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
 
@@ -124,6 +117,28 @@ INSERT INTO `document` (`dno`, `sid`, `file_name`, `dtitle`, `posted_date`, `due
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `eval_status`
+--
+
+CREATE TABLE IF NOT EXISTS `eval_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `eval_status`
+--
+
+INSERT INTO `eval_status` (`id`, `description`) VALUES
+(1, 'Submitted'),
+(2, 'Accepted'),
+(3, 'Rejected'),
+(4, 'Scored');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `person`
 --
 
@@ -133,6 +148,12 @@ CREATE TABLE IF NOT EXISTS `person` (
   `m_init` varchar(1) NOT NULL,
   `l_name` varchar(25) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `city` varchar(25) DEFAULT NULL,
+  `state` varchar(2) DEFAULT NULL,
+  `zip` bigint(6) DEFAULT NULL,
+  `phone` bigint(10) DEFAULT NULL,
+  `fax` bigint(10) DEFAULT NULL,
   `ssn` int(10) NOT NULL,
   `password` varchar(100) NOT NULL,
   `rid` int(11) NOT NULL,
@@ -146,13 +167,13 @@ CREATE TABLE IF NOT EXISTS `person` (
 -- Dumping data for table `person`
 --
 
-INSERT INTO `person` (`pid`, `f_name`, `m_init`, `l_name`, `email`, `ssn`, `password`, `rid`, `creationDate`, `subscription_Date`, `subscription_flag`) VALUES
-(1, 'zainiya', 'a', 'manjiyani', 'abc@gmail.com', 1234, 'abcd', 1, '2018-03-30 14:22:29', NULL, 1),
-(2, 'shaaz', '', 'manjiyani', 'lovelyzinu@gmail.com', 1234, 'shaaz', 2, '2018-03-30 14:22:29', NULL, 1),
-(3, 'zohra', 'a', 'manjiyani', 'zohra@gmail.com', 4567, 'zohra', 1, '2018-04-01 12:33:40', NULL, 1),
-(4, 'Sneha', '', 'Manjiyani', 'sneha.manjiyani@gmail.com', 4567, 'sneha', 3, '2018-04-22 11:07:28', NULL, 1),
-(5, 'Alim', '', 'Manjiyani', 'zaineyamanjiyani@gmail.com', 7894, 'alim', 4, '2018-04-22 11:10:16', NULL, 1),
-(6, 'parth', 'u', 'pachchigar', 'parthpachchigar@gmail.com', 7896, 'parth', 2, '2018-04-01 13:35:54', NULL, 1);
+INSERT INTO `person` (`pid`, `f_name`, `m_init`, `l_name`, `email`, `address`, `city`, `state`, `zip`, `phone`, `fax`, `ssn`, `password`, `rid`, `creationDate`, `subscription_Date`, `subscription_flag`) VALUES
+(1, 'zainiya', 'a', 'manjiyani', 'abc@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 1234, 'abcd', 1, '2018-03-30 14:22:29', NULL, 1),
+(2, 'shaaz', '', 'manjiyani', 'lovelyzinu@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 1234, 'shaaz', 2, '2018-03-30 14:22:29', NULL, 1),
+(3, 'zohra', 'a', 'manjiyani', 'zohra@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 4567, 'zohra', 1, '2018-04-01 12:33:40', NULL, 1),
+(4, 'Sneha', '', 'Manjiyani', 'sneha.manjiyani@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 4567, 'sneha', 3, '2018-04-22 11:07:28', NULL, 1),
+(5, 'Alim', '', 'Manjiyani', 'zaineyamanjiyani@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 7894, 'alim', 4, '2018-04-22 11:10:16', NULL, 1),
+(6, 'parth', 'u', 'pachchigar', 'parthpachchigar@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 7896, 'parth', 2, '2018-04-01 13:35:54', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -188,6 +209,33 @@ INSERT INTO `solicitation` (`pid`, `sid`, `stitle`, `type`, `category`, `status`
 (1, '9876-7563', 'TEST AGAIN', 'rfp', 'pscc', 'New', '2018-04-25 15:14:13', '2018-04-27 15:00:00', '<p>TESTING AGAIN!!!</p>', 0),
 (1, 'ABCD-1234', 'ABCD TEST', 'ifb', 'it', 'Published', '2018-05-01 13:54:13', '2018-05-31 15:00:00', 'TEST HELLO WORLD', 0),
 (1, 'XZYR-4567', 'TEST ', 'ifb', 'it', 'Published', '2018-05-01 17:49:45', '2018-05-25 15:00:00', '<p>HELLO</p>', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `status`
+--
+
+CREATE TABLE IF NOT EXISTS `status` (
+  `id` int(2) DEFAULT NULL,
+  `title` varchar(20) NOT NULL,
+  `description` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`title`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `status`
+--
+
+INSERT INTO `status` (`id`, `title`, `description`) VALUES
+(1, 'Approved', 'This is Approved'),
+(2, 'New', 'This is New or Submitted'),
+(3, 'Published', 'This is Published'),
+(4, 'Rejected', 'This is Rejected'),
+(5, 'Under Review', 'This is Under Review'),
+(6, 'Awarded', 'This is Awarded'),
+(7, 'Cancelled', 'This is Cancelled'),
+(8, 'Archived', 'This is Archived');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
