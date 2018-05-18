@@ -363,6 +363,7 @@ function viewAllDocument(){
 	//file_name, sid, dtitle, posted_date, due_date, file
 		$res= mysqli_query($conn,$sql);
 		$msg="<table id='documentTable' class='table table-striped'><thead>
+		<th>Document Title</th>
 		<th>File Name</th>
 		<th>Posted Date</th>
 		<th>Due Date</th>
@@ -370,6 +371,7 @@ function viewAllDocument(){
 		</thead>";
 		while($row=mysqli_fetch_assoc($res)){
 			$msg=$msg. "<tr>
+			<td>".$row['dtitle']."</td>
 			<td><a href='".$row['file']."' target='_blank'>".$row['file_name']."</a></td>
 			<td>".$row['posted_date']."</td>
 			<td>".$row['due_date']."</td>
