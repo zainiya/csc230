@@ -10,5 +10,7 @@ if (!$conn) {
 	$solicitationdetails = mysqli_fetch_object($result);
 	echo json_encode($solicitationdetails);	
 	$_SESSION["sid"] = $sid; 
+	//echo $_SESSION["sid"];
+
 }
 ?>

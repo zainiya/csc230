@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 ?>
 
 <!DOCTYPE html>
@@ -98,14 +97,17 @@ session_start();
 					publishSolicitation($_GET["pubsid"]);
 				}
 				?>
-				<form action="document.php?type=Update&sid=<?php echo $_SESSION['sid']; ?>" method="post" name="createsolicitation">
+				<form action="document.php?type=Update&sid=<?php 
+				if(isset($_GET['sid'])){
+					echo $_GET['sid'];
+				}else{
+				 $_SESSION['sid'];} ?>" method="post" name="createsolicitation">
 					<div class="col-sm-6">
 						<?php 
 						if(isset($_GET["msg"]))
 						{	
 							echo "<font color='green'>".$_GET["msg"]."</font><br>";
 						}
-
 						?>
 						Number <span class="req">(required)</span><br>
 						<input type="text" placeholder="2018-" name="snumber" id="snumber" required><br>
@@ -148,9 +150,13 @@ session_start();
 				</form> 
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#upload-document" id="upbtn" style="border-radius: 0;"><i class="fa fa-upload" aria-hidden="true"></i>  Upload Documents</button>
 
-				<a href="document.php?pubsid=<?php echo $_SESSION['sid']; ?>" ><button type="button" class="btn btn-success" id="PublishSolicitation" style="border-radius: 0;"><i class="fa fa-check" aria-hidden="true"></i> Publish Solicitation</button></a>
+				<a href="document.php?pubsid=<?php if(isset($_GET['sid'])){
+					echo $_GET['sid'];
+					} ?>" ><button type="button" class="btn btn-success" id="PublishSolicitation" style="border-radius: 0;"><i class="fa fa-check" aria-hidden="true"></i> Publish Solicitation</button></a>
 
-				<a href="document.php?cansid=<?php echo $_SESSION['sid']; ?>" ><button type="button" class="btn btn-danger" id="cancelSolicitation" style="border-radius: 0;"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i> Cancel Solicitation</button></a>
+				<a href="document.php?cansid=<?php if(isset($_GET['sid'])){
+					echo $_GET['sid'];
+					} ?>" ><button type="button" class="btn btn-danger" id="cancelSolicitation" style="border-radius: 0;"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i> Cancel Solicitation</button></a>
 
 				<button type="reset" class="btn btn-default" style="border-radius: 0;" onclick="openPage('solicitations.php')">Cancel</button>
 

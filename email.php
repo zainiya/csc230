@@ -89,10 +89,10 @@ session_start();
 				<div class="col-sm-6">
 					<?php 
 						if(isset($_POST['group1'])){
-								send_email(1,$_POST['subject'], $_POST['message'],$_FILES['emaildoc']);
+								send_email(1,$_POST['subject'], $_POST['message']);
 						}
 						if(isset($_POST['group2'])){
-								send_email(2, $_POST['subject'], $_POST['message'],$_FILES['emaildoc']);
+								send_email(2, $_POST['subject'], $_POST['message']);
 						}
 
 					?>
